@@ -20,6 +20,6 @@ int main()
   }
   count--;                        
   fprintf(stdout,"%d",count);
-  fclose(fptr);
+  fclose(fptr);   //closing the file
   return 0;
 }
