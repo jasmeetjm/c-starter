@@ -1,17 +1,18 @@
+/*to convert ascii into integers */
+
 #include<stdio.h>
 int main()
 {
-char a[32];
-printf("enter");
-scanf("%s",a);
-int index=0;
-int sum=0;
-while (a[index]!='\0')
-{
-sum=(sum*10)+(a[index]-'\0');
-index++;
-}
-printf("%d",sum);
-return 0;
+  char str[32];       //variable to enter any string
+  printf("enter");  
+  scanf("%s",str);
+  int index=0,      //varable to point to array
+      sum=0;      //to calculate it's value into integers
+  while (str[index]!='\0') {  
+    sum=(sum*10)+(str[index]-'\0');
+    index++;
+  }
+  printf("%d",sum);
+  return 0;
 }
 
