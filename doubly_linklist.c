@@ -1,44 +1,40 @@
+/* to create a doubly link list */
+
 #include<stdio.h>
 #include<stdlib.h>
-	
-typedef struct linklist
+
+typedef struct linklist //creating a structure of link list
 {
-	int data;
+	int data;		
 	struct linklist *next;
 	struct linklist *prev;
-}ll;	
-	ll *head=NULL;
-	
-	ll insertion(int num)
-{
-	if(head==NULL)
-{
-		head=malloc(sizeof(ll));
-	head->data=num;
-	head->next=NULL;
-	head->prev=NULL;
-	printf("%d\t",head->data);
-	return *head;	
-}
-	ll *temp=malloc(sizeof(ll));
+}list;	
+list *head=NULL;	//declaring head of linklist
 
-	if(head->next==NULL)
-{
-	head->next=temp;
-	temp->data=num;
-	temp->next=head;
-	temp->prev=head;
-	head->prev=temp;
-	printf("%d\t",temp->data);
-	return *temp;
-}
+list insertion(int num) {
+	if(head==NULL) {	
+		head=malloc(sizeof(list));	//allocating memory to head
+		head->data=num;			//entering data in head
+		head->next=NULL;
+		head->prev=NULL;
+		printf("%d\t",head->data);
+		return *head;	
+	}
+	list *temp=malloc(sizeof(list));		//allcoaing  memory to the node
+	if(head->next==NULL) {				
+		head->next=temp;
+		temp->data=num;
+		temp->next=head;
+		temp->prev=head;
+		head->prev=temp;
+		printf("%d\t",temp->data);
+		return *temp;
+	}
 	temp=head;
-	while(temp->next!=head)
-{
-	temp=temp->next;
-}
-	temp->next=malloc(sizeof(ll));
-	temp->next->data=num;
+	while(temp->next!=head) 	//finding particular position to enter the node		
+		temp=temp->next;
+	temp->next=malloc(sizeof(list));
+	temp->next->data=num;		
 	temp->next->next=head;
 	temp->next->prev=temp;
 	head->prev=temp->next;
@@ -46,58 +42,47 @@ typedef struct linklist
 	printf("%d\t",temp->data);
 	return *temp;
 }
-		
 
-	ll deletion(int num)
-{
-	if(head==NULL)
-{
-	fprintf(stderr,"linklist empty");
-	return;
-}		
-	ll *temp=malloc(sizeof(ll));
+list deletion(int num) {
+	if(head==NULL) {	//if linklist is empty
+		fprintf(stderr,"linklist empty");	
+		return;
+	}		
+	list *temp=malloc(sizeof(list));	
+	if(head->data==num && head->next->next == head) { //if there are only 2 nodes in a linkedlist
+		temp=head;	
+		head=head->next;
+		head->next=NULL;
+		head->prev=NULL;
+		return *temp;
+	}
+	if(head->data==num) {	//if there is only 1 node in a linked list
+		head->next->prev=head->prev;
+		head->prev->next=head->next;
+		head=head->next;
+		return;
+	}
+	/*if(head->next->data == num && head->next->next==head) {	
+		temp=head->next;
+		head->next=NULL;
+		head->prev=NULL;
+		printf("%d\n",temp->data);
+		return *temp;
+	}*/
 	
-	if(head->data==num && head->next->next == head)
-{	
-	temp=head;
-	head=head->next;
-	head->next=NULL;
-	head->prev=NULL;
-
-	return *temp;
-}
-	if(head->data==num)
-{
-	head->next->prev=head->prev;
-	head->prev->next=head->next;
-	head=head->next;
-	return;
-}
-	if(head->next->data == num && head->next->next==head)
-{
-	temp=head->next;
-	head->next=NULL;
-	head->prev=NULL;
-	printf("%d\n",temp->data);
-	return *temp;
-}
-	
-	temp=head;
-	while(temp->data!=num && temp->next!=head)
-{
-	temp=temp->next;
-}
-	if(temp->data==num)
+	temp=head;	
+	while(temp->data!=num && temp->next!=head) //to find a node to be deleted
+		temp=temp->next;
+	if(temp->data==num)	// node to be deleted
 	{
-		temp->prev->next=temp->next;
+		temp->prev->next=temp->next;	
 		temp->next->prev=temp->prev;
 		return;	
-}
-	if(temp->next==head)
-{
+	}
+	if(temp->next==head) {	//if we not found node
 	fprintf(stderr,"number not available\n");
 	return;
-}
+	}
 }
 	
 int main()
